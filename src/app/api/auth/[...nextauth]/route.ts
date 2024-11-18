@@ -5,45 +5,6 @@ import axios from "axios";
 //For development: http://localhost:3000/api/auth/callback/google
 // se the availables provider in /api/auth/providers
 
-type Profile = {
-  iss: string;
-  azp: string;
-  aud: string;
-  sub: string;
-  email: string;
-  email_verified: boolean;
-  at_hash: string;
-  name: string;
-  picture: string;
-  given_name: string;
-  family_name: string;
-  iat: number;
-  exp: number;
-};
-
-type Account = {
-  provider: string;
-  type: string;
-  providerAccountId: string;
-  access_token: string;
-  expires_at: number;
-  scope: string;
-  token_type: string;
-  id_token: string;
-};
-
-type Token = {
-  name: string;
-  email: string;
-  picture: string;
-  sub: string;
-};
-
-type JWTparams = {
-  token: Token;
-  account: Account;
-  profile: Profile;
-};
 export const authOptions: AuthOptions = {
   providers: [
     GoogleProvider({
