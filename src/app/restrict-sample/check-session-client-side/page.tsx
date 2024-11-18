@@ -3,6 +3,8 @@
 import { useSession } from "next-auth/react";
 import { LogoutButton } from "@/components/logoutButton";
 import { redirect } from "next/navigation";
+import { useEffect } from "react";
+import axios from "axios";
 
 export default function Page() {
   const { data: session, status } = useSession();
@@ -11,6 +13,23 @@ export default function Page() {
   if (!isAuth) {
     redirect("/");
   }
+
+  useEffect(() => {
+    if (status === "authenticated" && session?.user?.accessToken) {
+      axios
+        .get(`${process.env.NEXT_PUBLIC_EXTERNAL_API}/protected`, {
+          headers: {
+            Authorization: `Bearer ${session.user.accessToken}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [status, session]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 text-center">
